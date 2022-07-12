@@ -3,6 +3,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
+using System.Collections.Generic;
+using Storyboard;
 
 namespace Sty{
     public class Grid : ISprite {
@@ -31,8 +33,7 @@ namespace Sty{
             this.cols = (this.width  / gridSize) / 2;
             this.font = font;
             this.centerX = (this.width / 2);
-            this.centerY = (this.height/ 2);
-            
+            this.centerY = (this.height/ 2);	
         }   
         public void Update(GameTime gameTime){
             previousState = mouseState;
