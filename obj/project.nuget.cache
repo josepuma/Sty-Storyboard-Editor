@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "UlEx6CQniiCPiU4fABzHjkTHfayssuoYngn7ByjtrjoAbquiNgKbctcy/PMOJMkVOZ3WmbLL0oIMdxlgAZl19A==",
+  "dgSpecHash": "VGMs6u05KR714B454RHa9Qd5WsyqiqCek00Bi3IqIQxixjxniEAIX6Wf19A1BaaHyQumfDrEV8EMKYVrs8FvKQ==",
   "success": true,
   "projectFilePath": "/Users/josepuma/Documents/personal/mono/Sty/Sty.csproj",
   "expectedPackageFiles": [
+    "/Users/josepuma/.nuget/packages/managedbass/3.1.1/managedbass.3.1.1.nupkg.sha512",
     "/Users/josepuma/.nuget/packages/microsoft.codeanalysis.analyzers/3.3.3/microsoft.codeanalysis.analyzers.3.3.3.nupkg.sha512",
     "/Users/josepuma/.nuget/packages/microsoft.codeanalysis.common/4.2.0/microsoft.codeanalysis.common.4.2.0.nupkg.sha512",
     "/Users/josepuma/.nuget/packages/microsoft.codeanalysis.csharp/4.2.0/microsoft.codeanalysis.csharp.4.2.0.nupkg.sha512",

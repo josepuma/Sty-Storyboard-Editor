@@ -8,7 +8,9 @@ namespace HelloWorld
    {
        public Sprite Generate()
        {
-            var sp = new Sprite("rsz_bg.jpg");
+            var sp = new Sprite("light2.png"){ };
+            sp.Fade(0,10000,1,0);
+            sp.Scale(0,10000,1,0);
             return sp;
        }
    }

@@ -2,6 +2,15 @@
   "version": 3,
   "targets": {
     "net6.0": {
+      "ManagedBass/3.1.1": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard1.4/ManagedBass.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.4/ManagedBass.dll": {}
+        }
+      },
       "Microsoft.CodeAnalysis.Analyzers/3.3.3": {
         "type": "package",
         "build": {
@@ -359,6 +368,25 @@
     }
   },
   "libraries": {
+    "ManagedBass/3.1.1": {
+      "sha512": "qaIIM2VEmZ9DaNCIu306aXi5zS8LZQjo0SNkLb3AjkpxKXA9K/O/LndCogC+cJPb2IKeChJEEXR42JEe6UTq/A==",
+      "type": "package",
+      "path": "managedbass/3.1.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.md",
+        "icon.png",
+        "lib/Xamarin.iOS/ManagedBass.dll",
+        "lib/Xamarin.iOS/ManagedBass.xml",
+        "lib/net45/ManagedBass.dll",
+        "lib/net45/ManagedBass.xml",
+        "lib/netstandard1.4/ManagedBass.dll",
+        "lib/netstandard1.4/ManagedBass.xml",
+        "managedbass.3.1.1.nupkg.sha512",
+        "managedbass.nuspec"
+      ]
+    },
     "Microsoft.CodeAnalysis.Analyzers/3.3.3": {
       "sha512": "j/rOZtLMVJjrfLRlAMckJLPW/1rze9MT1yfWqSIbUPGRu1m1P0fuo9PmqapwsmePfGB5PJrudQLvmUOAMF0DqQ==",
       "type": "package",
@@ -1175,6 +1203,7 @@
   },
   "projectFileDependencyGroups": {
     "net6.0": [
+      "ManagedBass >= 3.1.1",
       "Microsoft.NETCore.Portable.Compatibility >= 1.0.1",
       "MonoGame.Content.Builder.Task >= 3.8.0.1641",
       "MonoGame.Framework.DesktopGL >= 3.8.0.1641",
@@ -1218,6 +1247,10 @@
       "net6.0": {
         "targetAlias": "net6.0",
         "dependencies": {
+          "ManagedBass": {
+            "target": "Package",
+            "version": "[3.1.1, )"
+          },
           "Microsoft.NETCore.Portable.Compatibility": {
             "target": "Package",
             "version": "[1.0.1, )"
