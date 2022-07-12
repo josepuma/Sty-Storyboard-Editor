@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Storyboard;
+using Westwind.Scripting;
 
 namespace Sty
 {
@@ -19,7 +21,7 @@ namespace Sty
         {
             _graphics = new GraphicsDeviceManager(this);
             
-            Content.RootDirectory = "/Users/josepuma/Documents/mono/Sty";
+            Content.RootDirectory = "/Users/josepuma/Documents/personal/mono/Sty";
             IsMouseVisible = true;
                        
         }
@@ -38,25 +40,34 @@ namespace Sty
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            _texturesContent = TextureContent.LoadListContent<Texture2D>(GraphicsDevice, "/Users/josepuma/Library/Mobile Documents/com~apple~CloudDocs/Documents/mono/sb");
+            
+            _texturesContent = TextureContent.LoadListContent<Texture2D>(GraphicsDevice, "/Users/josepuma/Documents/personal/sb");
             SpriteUtility.Instance.SetSpriteBatch(_spriteBatch);
             SpriteUtility.Instance.SetContentTextures(_texturesContent);
             SpriteUtility.Instance.SetGraphicsContext(_graphics);
             
             sbObjects = new List<Sprite>();
             /*sbObjects.Add(
-                new Sprite("bg.jpg")
+                new Sprite("rsz_bg.jpg")
             );*/
  
 
-            /*var script = new CSharpScriptExecution() { SaveGeneratedCode = true };
+            var script = new CSharpScriptExecution(){ SaveGeneratedCode = true };
             script.AddDefaultReferencesAndNamespaces();
-            script.AddAssembly("Sprite.dll");
-            script.AddNamespace("Storyboard");*/
+            script.AddAssembly(typeof(Storyboard.Sprite));
+            script.AddNamespace("Storyboard");
+            
+            
+            var code = File.ReadAllText("scripts/Background.cs");
+            var sb = script.CompileClass(code);
+            sb.Generate();
 
-            //var code = File.ReadAllText("scripts/Background.cs");
+            Console.WriteLine("Error: " + script.ErrorMessage);
+            Console.WriteLine("Error: " + script.ErrorType);
+            Console.WriteLine("Error: " + script.Error);
             
-            
+            //sbObjects.Add(spp);
+            //Console.WriteLine(script.GeneratedClassCodeWithLineNumbers);
             //var monitor = new Monitor("scripts", sbObjects);
            
 

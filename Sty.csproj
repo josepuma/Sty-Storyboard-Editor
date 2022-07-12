@@ -25,6 +25,9 @@
     <None Remove="Microsoft.CodeAnalysis.CSharp.Workspaces" />
     <None Remove="Microsoft.CodeAnalysis.CSharp" />
     <None Remove="Testura.Code" />
+    <None Remove="MonoGame.Framework.MacOS" />
+    <None Remove="MonoGame.Content.Builder.Task" />
+    <None Remove="MonoGame.Framework.DesktopGL" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Icon.ico" />
@@ -37,15 +40,13 @@
     <TrimmerRootAssembly Include="Microsoft.Xna.Framework.Content.ContentTypeReader" Visible="false" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.0.1641" />
-    <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.0.1641" />
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.0.1" />
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.0.1" />
-    <PackageReference Include="Testura.Code" Version="1.3.0" />
+    <Reference Include="Sprite">
+      <HintPath>..\..\..\..\Projects\Sprite\Sprite\bin\Release\Sprite.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Sprite">
-      <HintPath>..\..\..\Projects\Sprite\Sprite\bin\Release\Sprite.dll</HintPath>
-    </Reference>
+    <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.0.1641" />
+    <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.0.1641" />
+    <PackageReference Include="Westwind.Scripting" Version="1.1.5" />
   </ItemGroup>
 </Project>

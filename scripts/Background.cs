@@ -1,13 +1,15 @@
 using System;
+using System.IO;
+using Storyboard;
 
 namespace HelloWorld
 {
-   public class Storyboard
+   public class Demo
    {
-       public void run()
+       public void Generate()
        {
-           Console.WriteLine("Hello world");
-           Console.ReadLine();
+            var sp = new Sprite("bg.jpg");
+            sp.GetInfo();
        }
    }
 }
