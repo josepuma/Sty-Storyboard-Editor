@@ -60,7 +60,7 @@ namespace Sty
             
             var code = File.ReadAllText("scripts/Background.cs");
             var sb = script.CompileClass(code);
-            sb.Generate();
+            //sb.Generate();
 
             Console.WriteLine("Error: " + script.ErrorMessage);
             Console.WriteLine("Error: " + script.ErrorType);

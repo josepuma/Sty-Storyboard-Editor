@@ -1019,7 +1019,7 @@
       "outputPath": "/Users/josepuma/Documents/personal/mono/Sty/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/Users/josepuma/.nuget/NuGet/NuGet.Config"
+        "/Users/josepuma/.config/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net6.0"
