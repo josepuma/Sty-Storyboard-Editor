@@ -4,7 +4,7 @@ using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Storyboard;
+using Sprity;
 using Westwind.Scripting;
 
 namespace Sty
@@ -54,13 +54,14 @@ namespace Sty
 
             var script = new CSharpScriptExecution(){ SaveGeneratedCode = true };
             script.AddDefaultReferencesAndNamespaces();
-            script.AddAssembly(typeof(Storyboard.Sprite));
+            script.AddAssembly(typeof(Sprity.Sprite));
+            
             script.AddNamespace("Storyboard");
             
             
             var code = File.ReadAllText("scripts/Background.cs");
             var sb = script.CompileClass(code);
-            //sb.Generate();
+            sbObjects.Add(sb.Generate());
 
             Console.WriteLine("Error: " + script.ErrorMessage);
             Console.WriteLine("Error: " + script.ErrorType);

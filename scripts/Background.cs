@@ -1,15 +1,15 @@
 using System;
 using System.IO;
-using Storyboard;
+using Sprity;
 
 namespace HelloWorld
 {
    public class Demo
    {
-       public void Generate()
+       public Sprite Generate()
        {
-            var sp = new Sprite("bg.jpg");
-            sp.GetInfo();
+            var sp = new Sprite("rsz_bg.jpg");
+            return sp;
        }
    }
 }

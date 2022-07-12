@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "ITKd/CoHajQ5IpmLZnajXSI6Yvrhl1qR73T7Wu2p78IBFuwEqD1FkNniLGizjChkbIrQbcS8M/IIPknxu75Z5w==",
+  "dgSpecHash": "UlEx6CQniiCPiU4fABzHjkTHfayssuoYngn7ByjtrjoAbquiNgKbctcy/PMOJMkVOZ3WmbLL0oIMdxlgAZl19A==",
   "success": true,
   "projectFilePath": "/Users/josepuma/Documents/personal/mono/Sty/Sty.csproj",
   "expectedPackageFiles": [
@@ -8,6 +8,10 @@
     "/Users/josepuma/.nuget/packages/microsoft.codeanalysis.common/4.2.0/microsoft.codeanalysis.common.4.2.0.nupkg.sha512",
     "/Users/josepuma/.nuget/packages/microsoft.codeanalysis.csharp/4.2.0/microsoft.codeanalysis.csharp.4.2.0.nupkg.sha512",
     "/Users/josepuma/.nuget/packages/microsoft.codeanalysis.scripting.common/4.2.0/microsoft.codeanalysis.scripting.common.4.2.0.nupkg.sha512",
+    "/Users/josepuma/.nuget/packages/microsoft.netcore.jit/1.0.2/microsoft.netcore.jit.1.0.2.nupkg.sha512",
+    "/Users/josepuma/.nuget/packages/microsoft.netcore.portable.compatibility/1.0.1/microsoft.netcore.portable.compatibility.1.0.1.nupkg.sha512",
+    "/Users/josepuma/.nuget/packages/microsoft.netcore.runtime.coreclr/1.0.2/microsoft.netcore.runtime.coreclr.1.0.2.nupkg.sha512",
+    "/Users/josepuma/.nuget/packages/microsoft.netcore.windows.apisets/1.0.1/microsoft.netcore.windows.apisets.1.0.1.nupkg.sha512",
     "/Users/josepuma/.nuget/packages/monogame.content.builder.task/3.8.0.1641/monogame.content.builder.task.3.8.0.1641.nupkg.sha512",
     "/Users/josepuma/.nuget/packages/monogame.framework.desktopgl/3.8.0.1641/monogame.framework.desktopgl.3.8.0.1641.nupkg.sha512",
     "/Users/josepuma/.nuget/packages/system.collections.immutable/5.0.0/system.collections.immutable.5.0.0.nupkg.sha512",

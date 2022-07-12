@@ -17,6 +17,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <NoStdLib>false</NoStdLib>
+    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Icon.ico" />
@@ -28,6 +29,8 @@
     <None Remove="MonoGame.Framework.MacOS" />
     <None Remove="MonoGame.Content.Builder.Task" />
     <None Remove="MonoGame.Framework.DesktopGL" />
+    <None Remove="Microsoft.NETCore.Portable.Compatibility" />
+    <None Remove="Sprity" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Icon.ico" />
@@ -40,13 +43,15 @@
     <TrimmerRootAssembly Include="Microsoft.Xna.Framework.Content.ContentTypeReader" Visible="false" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Sprite">
-      <HintPath>..\..\..\..\Projects\Sprite\Sprite\bin\Release\Sprite.dll</HintPath>
+    <Reference Include="mscorlib" Version="4.0.0.0" Culture="neutral" PublicKeyToken="b77a5c561934e089" />
+    <Reference Include="Sprity">
+      <HintPath>..\..\..\..\Projects\Sprity\Sprity\bin\Release\netcoreapp3.1\Sprity.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.0.1641" />
     <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.0.1641" />
     <PackageReference Include="Westwind.Scripting" Version="1.1.5" />
+    <PackageReference Include="Microsoft.NETCore.Portable.Compatibility" Version="1.0.1" />
   </ItemGroup>
 </Project>

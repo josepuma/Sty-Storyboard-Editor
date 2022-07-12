@@ -14,7 +14,7 @@
         "outputPath": "/Users/josepuma/Documents/personal/mono/Sty/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/josepuma/.config/NuGet/NuGet.Config"
+          "/Users/josepuma/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
@@ -38,6 +38,10 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "Microsoft.NETCore.Portable.Compatibility": {
+              "target": "Package",
+              "version": "[1.0.1, )"
+            },
             "MonoGame.Content.Builder.Task": {
               "target": "Package",
               "version": "[3.8.0.1641, )"
