@@ -5,6 +5,7 @@ using ManagedBass;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using SimpleFpsCounter;
 using Sprity;
 using Westwind.Scripting;
 
@@ -18,6 +19,8 @@ namespace Sty
         private Dictionary<string, Texture2D> _texturesContent;
         private Grid _grid;
         private Sound _mainBackgroundSong;
+        private SpriteFont font;
+        SimpleFps fps = new SimpleFps();
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -30,9 +33,11 @@ namespace Sty
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            _graphics.PreferredBackBufferWidth = 854;
-            _graphics.PreferredBackBufferHeight = 480;
+            _graphics.PreferredBackBufferWidth = 1920;
+            _graphics.PreferredBackBufferHeight = 1080;
             _graphics.ApplyChanges();
+            _graphics.SynchronizeWithVerticalRetrace = false;
+            this.IsFixedTimeStep = false;
             base.Initialize();
         }
 
@@ -62,21 +67,15 @@ namespace Sty
             
             var code = File.ReadAllText("scripts/Background.cs");
             var sb = script.CompileClass(code);
-            var sprite = sb.Generate();
-            sbObjects.Add(sprite);
-            var properties = sprite.GetType().GetProperties();
+            var sprites = sb.Generate();
+            sbObjects.AddRange(sprites);
+            //var properties = sprite.GetType().GetProperties();
 
             Console.WriteLine("Error: " + script.ErrorMessage);
             Console.WriteLine("Error: " + script.ErrorType);
             Console.WriteLine("Error: " + script.Error);
-            
-            //sbObjects.Add(spp);
-            //Console.WriteLine(script.GeneratedClassCodeWithLineNumbers);
-            //var monitor = new Monitor("scripts", sbObjects);
-           
-            //frames.Add(new ValueCommand("F",0,1000,0,1));
-            //frames.Add(new ValueCommand("S",2000,3000,1,0));
-            _grid = new Grid(Content.Load<SpriteFont>("assets/Fonts/Arial"), GraphicsDevice, 854, 480, _graphics , 10);
+            font = Content.Load<SpriteFont>("assets/Fonts/Arial");
+            _grid = new Grid(font, GraphicsDevice, 854, 480, _graphics , 10);
             _mainBackgroundSong.Play();
         
         }
@@ -89,7 +88,7 @@ namespace Sty
             
                 foreach (Sprite spriteObject in sbObjects)
                 {
-                    spriteObject.Update(_soundPosition);
+                    spriteObject.Update(_soundPosition, gameTime);
                 }
             }
             
@@ -98,7 +97,8 @@ namespace Sty
 
             // TODO: Add your update logic here
             
-            _grid.Update(0);
+            _grid.Update(0, gameTime);
+            fps.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -114,6 +114,7 @@ namespace Sty
             
             if(Keyboard.GetState().IsKeyDown(Keys.G)){
                 _grid.Draw();
+                fps.DrawFps(_spriteBatch, font, new Vector2(10f, 10f), Color.MonoGameOrange);
             }
             
             base.Draw(gameTime);

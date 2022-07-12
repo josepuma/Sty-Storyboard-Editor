@@ -35,7 +35,7 @@ namespace Sty{
             this.centerX = (this.width / 2);
             this.centerY = (this.height/ 2);	
         }   
-        public void Update(double position){
+        public void Update(double position, GameTime gameTime){
             previousState = mouseState;
             mouseState = Mouse.GetState(); //Needed to find the most current mouse states.
             mousePosition.X = mouseState.X; //Change x pos to mouseX
