@@ -15,7 +15,7 @@ namespace Sty{
                 Console.WriteLine("file:" +  path + _stream);
                 if(_stream != 0){
                     _isStreamLoaded = true;
-                    Console.WriteLine("did something");
+
                 }
             }
         }
@@ -34,6 +34,11 @@ namespace Sty{
                 return time * 1000;
             }
             return 0;
+        }
+
+        public void ChangePosition(double position){
+            var newPosition = Bass.ChannelSeconds2Bytes(_stream, position / 1000);
+            Bass.ChannelSetPosition(_stream, newPosition);
         }
     }
 }

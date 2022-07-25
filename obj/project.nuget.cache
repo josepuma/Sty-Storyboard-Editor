@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "VGMs6u05KR714B454RHa9Qd5WsyqiqCek00Bi3IqIQxixjxniEAIX6Wf19A1BaaHyQumfDrEV8EMKYVrs8FvKQ==",
+  "dgSpecHash": "JE0WTpAIncBHcL4qJgl7xxLthZ1eRMbpn1paZqE2in8E+QMkFglN6JdDiqiRWPCWeMm5GXEYGwDl/ouMxiFLxg==",
   "success": true,
   "projectFilePath": "/Users/josepuma/Documents/personal/mono/Sty/Sty.csproj",
   "expectedPackageFiles": [
@@ -8,7 +8,10 @@
     "/Users/josepuma/.nuget/packages/microsoft.codeanalysis.analyzers/3.3.3/microsoft.codeanalysis.analyzers.3.3.3.nupkg.sha512",
     "/Users/josepuma/.nuget/packages/microsoft.codeanalysis.common/4.2.0/microsoft.codeanalysis.common.4.2.0.nupkg.sha512",
     "/Users/josepuma/.nuget/packages/microsoft.codeanalysis.csharp/4.2.0/microsoft.codeanalysis.csharp.4.2.0.nupkg.sha512",
+    "/Users/josepuma/.nuget/packages/microsoft.codeanalysis.csharp.scripting/4.2.0/microsoft.codeanalysis.csharp.scripting.4.2.0.nupkg.sha512",
+    "/Users/josepuma/.nuget/packages/microsoft.codeanalysis.scripting/4.2.0/microsoft.codeanalysis.scripting.4.2.0.nupkg.sha512",
     "/Users/josepuma/.nuget/packages/microsoft.codeanalysis.scripting.common/4.2.0/microsoft.codeanalysis.scripting.common.4.2.0.nupkg.sha512",
+    "/Users/josepuma/.nuget/packages/microsoft.csharp/4.7.0/microsoft.csharp.4.7.0.nupkg.sha512",
     "/Users/josepuma/.nuget/packages/microsoft.netcore.jit/1.0.2/microsoft.netcore.jit.1.0.2.nupkg.sha512",
     "/Users/josepuma/.nuget/packages/microsoft.netcore.portable.compatibility/1.0.1/microsoft.netcore.portable.compatibility.1.0.1.nupkg.sha512",
     "/Users/josepuma/.nuget/packages/microsoft.netcore.runtime.coreclr/1.0.2/microsoft.netcore.runtime.coreclr.1.0.2.nupkg.sha512",

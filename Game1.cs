@@ -1,15 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using ManagedBass;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.CSharp.Scripting;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.CodeAnalysis.Scripting;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using SimpleFpsCounter;
-using Sprity;
-using Westwind.Scripting;
-
-namespace Sty
+using Sprity;namespace Sty
 {
     public class Game1 : Game
     {
@@ -41,43 +44,54 @@ namespace Sty
             base.Initialize();
         }
 
-       
+       public List<Sprite> CompileCode()
+        {
+            ScriptOptions scriptOptions = ScriptOptions.Default;
+            //Add reference to mscorlib
+            var mscorlib = typeof(System.Object).Assembly;
+            var systemCore = typeof(System.Linq.Enumerable).Assembly;
+            var sprity = typeof(Sprity.Sprite).Assembly;
+            scriptOptions = scriptOptions.AddReferences(mscorlib, systemCore, sprity);
+            //Add namespaces
+            scriptOptions = scriptOptions.AddImports("System");
+            scriptOptions = scriptOptions.AddImports("System.Linq");
+            scriptOptions = scriptOptions.AddImports("System.Collections.Generic");
+            scriptOptions = scriptOptions.AddImports("Sprity");
+
+
+
+            var script = File.ReadAllText("scripts/DemoStoryboard.cs");
+
+            //var state = await CSharpScript.RunAsync(script, scriptOptions);
+            var list = CSharpScript.RunAsync(script, scriptOptions).Result
+                       .ContinueWithAsync<List<Sprite>>("new Storyboard().Generate()").Result.ReturnValue;
+            return list;
+        }
 
         protected override void LoadContent()
         {
+          
+        
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            _mainBackgroundSong = new Sound("/Applications/osu!w.app/Contents/Resources/drive_c/osu!/Songs/35701 Lia - Toki wo Kizamu Uta/Lia-Toki wo Kizamu Uta.mp3");
+            var song = "/Applications/osu!w.app/Contents/Resources/drive_c/osu!/Songs/33810 Hashimoto Miyuki - NEVERLAND/NEVERLAND.mp3";
+            _mainBackgroundSong = new Sound(song);
             _texturesContent = TextureContent.LoadListContent<Texture2D>(GraphicsDevice, "/Users/josepuma/Documents/personal/sb");
             SpriteUtility.Instance.SetSpriteBatch(_spriteBatch);
             SpriteUtility.Instance.SetContentTextures(_texturesContent);
             SpriteUtility.Instance.SetGraphicsContext(_graphics);
+            SpriteUtility.Instance.SetGraphicsDevice(GraphicsDevice);
             
             sbObjects = new List<Sprite>();
-            /*sbObjects.Add(
-                new Sprite("rsz_bg.jpg")
-            );*/
- 
+            sbObjects.AddRange(CompileCode());
 
-            var script = new CSharpScriptExecution(){ SaveGeneratedCode = true };
-            script.AddDefaultReferencesAndNamespaces();
-            script.AddAssembly(typeof(Sprity.Sprite));
-            
-            script.AddNamespace("Storyboard");
-            
-            
-            var code = File.ReadAllText("scripts/Background.cs");
-            var sb = script.CompileClass(code);
-            var sprites = sb.Generate();
-            sbObjects.AddRange(sprites);
-            //var properties = sprite.GetType().GetProperties();
-
-            Console.WriteLine("Error: " + script.ErrorMessage);
-            Console.WriteLine("Error: " + script.ErrorType);
-            Console.WriteLine("Error: " + script.Error);
             font = Content.Load<SpriteFont>("assets/Fonts/Arial");
             _grid = new Grid(font, GraphicsDevice, 854, 480, _graphics , 10);
+            
+            
+           
+
             _mainBackgroundSong.Play();
-        
+
         }
 
         protected override void Update(GameTime gameTime)
@@ -85,7 +99,13 @@ namespace Sty
             var delta = (float)gameTime.ElapsedGameTime.TotalMilliseconds;
             if(_mainBackgroundSong.IsPlaying){
                 var _soundPosition = _mainBackgroundSong.GetPosition();
-            
+                if(Keyboard.GetState().IsKeyDown(Keys.Right))
+                    _mainBackgroundSong.ChangePosition(_soundPosition + 1000);
+
+                if(Keyboard.GetState().IsKeyDown(Keys.Left))
+                    _mainBackgroundSong.ChangePosition(_soundPosition - 1000);
+
+
                 foreach (Sprite spriteObject in sbObjects)
                 {
                     spriteObject.Update(_soundPosition, gameTime);
@@ -95,8 +115,6 @@ namespace Sty
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
-            
             _grid.Update(0, gameTime);
             fps.Update(gameTime);
             base.Update(gameTime);
@@ -116,7 +134,7 @@ namespace Sty
                 _grid.Draw();
                 fps.DrawFps(_spriteBatch, font, new Vector2(10f, 10f), Color.MonoGameOrange);
             }
-            
+
             base.Draw(gameTime);
         }
     }
