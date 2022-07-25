@@ -53,9 +53,9 @@ using Sprity;namespace Sty
             sbObjects = new List<Sprite>();
             _spriteBatch = new SpriteBatch(GraphicsDevice);
            
-            var song = "/Applications/osu!w.app/Contents/Resources/drive_c/osu!/Songs/33810 Hashimoto Miyuki - NEVERLAND/NEVERLAND.mp3";
+            var song = "/Applications/osu!w.app/Contents/Resources/drive_c/osu!/Songs/547714 RADWIMPS - Hikari/audio.mp3";
             _mainBackgroundSong = new Sound(song);
-            _texturesContent = TextureContent.LoadListContent<Texture2D>(GraphicsDevice, "/Users/josepuma/Documents/personal/sb");
+            _texturesContent = TextureContent.LoadListContent<Texture2D>(GraphicsDevice, "/Applications/osu!w.app/Contents/Resources/drive_c/osu!/Songs/547714 RADWIMPS - Hikari/sb");
             SpriteUtility.Instance.SetSpriteBatch(_spriteBatch);
             SpriteUtility.Instance.SetContentTextures(_texturesContent);
             SpriteUtility.Instance.SetGraphicsContext(_graphics);
@@ -64,6 +64,8 @@ using Sprity;namespace Sty
             
             _scriptLoader = new ScriptLoader("scripts", sbObjects);
             _scriptLoader.CompileCode();
+
+            
 
             font = Content.Load<SpriteFont>("assets/Fonts/Arial");
             _grid = new Grid(font, GraphicsDevice, 854, 480, _graphics , 10);

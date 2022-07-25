@@ -25,12 +25,12 @@ public class Storyboard {
                 sp.Rotate(start, start + beat,r,0);
                 sp.Move(start, start + beat,x, 580, x,0);
                 sp.Fade(start, start + beat,f,0);
-                sprites.Add(sp);
+                //sprites.Add(sp);
                 start+= 100;
             }
 
             // Spectrum
-            var song = "/Applications/osu!w.app/Contents/Resources/drive_c/osu!/Songs/33810 Hashimoto Miyuki - NEVERLAND/NEVERLAND.mp3";
+            var song = "/Applications/osu!w.app/Contents/Resources/drive_c/osu!/Songs/574067 Tia - The Glory Days/audio.mp3";
             var streamfft = new FftSound(song);
             var st = 0;
             var ed = streamfft.Duration * 1000;
@@ -73,7 +73,7 @@ public class Storyboard {
                         }
                     }
 
-                    sprites.Add(bar);
+                    //sprites.Add(bar);
                     pos++;
                 }
 
