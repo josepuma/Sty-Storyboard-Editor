@@ -9,10 +9,6 @@ public class Storyboard {
             
             //Background
             Random rnd = new Random();
-            var bg = new Sprite("bakaliz3.jpg"){ Size = 0.425 };
-            bg.Fade(0,10000000,1,1);
-
-            sprites.Add(bg);
 
             //Particles
             var start = 0;
@@ -60,7 +56,7 @@ public class Storyboard {
                     }
             }
 
-            var pos = 1;
+            var pos = 1; 
                 for(var j = 0; j< barCount; j++){
                     var fft = keys.GetAt(j);
                     var bar = new Sprite("bar.png"){ IsAdditiveBlend = true };

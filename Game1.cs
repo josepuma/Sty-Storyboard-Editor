@@ -24,6 +24,9 @@ using Sprity;namespace Sty
         private Sound _mainBackgroundSong;
         private SpriteFont font;
         SimpleFps fps = new SimpleFps();
+
+        private ScriptLoader _scriptLoader;
+        
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -44,35 +47,12 @@ using Sprity;namespace Sty
             base.Initialize();
         }
 
-       public List<Sprite> CompileCode()
-        {
-            ScriptOptions scriptOptions = ScriptOptions.Default;
-            //Add reference to mscorlib
-            var mscorlib = typeof(System.Object).Assembly;
-            var systemCore = typeof(System.Linq.Enumerable).Assembly;
-            var sprity = typeof(Sprity.Sprite).Assembly;
-            scriptOptions = scriptOptions.AddReferences(mscorlib, systemCore, sprity);
-            //Add namespaces
-            scriptOptions = scriptOptions.AddImports("System");
-            scriptOptions = scriptOptions.AddImports("System.Linq");
-            scriptOptions = scriptOptions.AddImports("System.Collections.Generic");
-            scriptOptions = scriptOptions.AddImports("Sprity");
-
-
-
-            var script = File.ReadAllText("scripts/DemoStoryboard.cs");
-
-            //var state = await CSharpScript.RunAsync(script, scriptOptions);
-            var list = CSharpScript.RunAsync(script, scriptOptions).Result
-                       .ContinueWithAsync<List<Sprite>>("new Storyboard().Generate()").Result.ReturnValue;
-            return list;
-        }
-
         protected override void LoadContent()
         {
           
-        
+            sbObjects = new List<Sprite>();
             _spriteBatch = new SpriteBatch(GraphicsDevice);
+           
             var song = "/Applications/osu!w.app/Contents/Resources/drive_c/osu!/Songs/33810 Hashimoto Miyuki - NEVERLAND/NEVERLAND.mp3";
             _mainBackgroundSong = new Sound(song);
             _texturesContent = TextureContent.LoadListContent<Texture2D>(GraphicsDevice, "/Users/josepuma/Documents/personal/sb");
@@ -81,8 +61,9 @@ using Sprity;namespace Sty
             SpriteUtility.Instance.SetGraphicsContext(_graphics);
             SpriteUtility.Instance.SetGraphicsDevice(GraphicsDevice);
             
-            sbObjects = new List<Sprite>();
-            sbObjects.AddRange(CompileCode());
+            
+            _scriptLoader = new ScriptLoader("scripts", sbObjects);
+            _scriptLoader.CompileCode();
 
             font = Content.Load<SpriteFont>("assets/Fonts/Arial");
             _grid = new Grid(font, GraphicsDevice, 854, 480, _graphics , 10);

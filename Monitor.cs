@@ -15,16 +15,17 @@ namespace Sty {
      private FileSystemWatcher watcher;
 
      private List<Sprite> sprites;
+     private ScriptLoader _scriptloader;
 
-    public Monitor(string watchedPath, List<Sprite> sprites)
+    public Monitor(string watchedPath, ScriptLoader scriptloader)
     {
         filePaths = new List<string>();
-        this.sprites = sprites;
+        this.sprites = new List<Sprite>();
         rwlock = new System.Threading.ReaderWriterLockSlim();
         filePaths = GetFiles(watchedPath);
         this.watchedPath = watchedPath;
+        this._scriptloader = scriptloader;
         InitFileSystemWatcher();
-        CompileCode();
     }
 
      private void InitFileSystemWatcher()
@@ -37,6 +38,7 @@ namespace Sty {
         watcher.IncludeSubdirectories = true;
         watcher.EnableRaisingEvents = true;
         watcher.Changed += Watcher_FileChanged;
+        watcher.NotifyFilter = NotifyFilters.LastWrite;
      }
 
     private void Watcher_Error(object sender, ErrorEventArgs e)
@@ -46,26 +48,15 @@ namespace Sty {
     }
 
     private void Watcher_FileChanged(object sender, FileSystemEventArgs e){
-        Console.WriteLine("File changed: " + e.FullPath);
-        CompileCode();
+         Console.WriteLine("File changed: " + e.FullPath);  
+        //CompileCode();
     }
     private List<string> GetFiles(string directory){
         var myFiles = Directory.EnumerateFiles(directory, "*.cs*").ToList();
         return myFiles;
     }
     private void CompileCode(){
-        sprites.Clear();
-        foreach(var path in filePaths){
-            
-            
-            
-            //Console.WriteLine(script.GeneratedClassCodeWithLineNumbers);
-            
-            //sb.Generate(sprites);
-        }
-
-        //Console.WriteLine(sprites.Count);
-        
+        _scriptloader.CompileCode();
     }
 
      private void Watcher_FileCreated(object sender, FileSystemEventArgs e)
