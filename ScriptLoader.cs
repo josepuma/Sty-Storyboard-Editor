@@ -12,19 +12,20 @@ namespace Sty {
 
         private string[] scriptPaths;
         private Dictionary<string, string> _scripts;
-        private Monitor _monitor;
+
         private string _path;
         
         private List<Sprite> _sprites;
-        public ScriptLoader(string path, List<Sprite> sprites){
+        public ScriptLoader(string path){
             _scripts = new Dictionary<string, string>();
             _path = path;
-            _monitor = new Monitor("scripts", this);
-            _sprites = sprites;
+            
+            _sprites = new List<Sprite>();
             LoadScripts();
         }
 
         public void LoadScripts(){
+            _scripts.Clear();
             var paths = Directory.EnumerateFiles(_path, "*.cs").ToList();
             Parallel.ForEach(paths, current => 
             {
@@ -38,8 +39,7 @@ namespace Sty {
             });
         }
 
-        public void CompileCode(){
-            Console.WriteLine("compiling code"); 
+        public List<Sprite> CompileCode(){
             ScriptOptions scriptOptions = ScriptOptions.Default;
             //Add reference to mscorlib
             var mscorlib = typeof(System.Object).Assembly;
@@ -52,11 +52,20 @@ namespace Sty {
             scriptOptions = scriptOptions.AddImports("System.Collections.Generic");
             scriptOptions = scriptOptions.AddImports("Sprity");
 
+            _sprites.Clear();
+
             foreach(var script in _scripts){
                 var list = CSharpScript.RunAsync(script.Value, scriptOptions).Result
                        .ContinueWithAsync<List<Sprite>>("new " + script.Key + "().Generate()").Result.ReturnValue;
-                _sprites.AddRange(list);
+                       if(list.Count > 0){
+                            _sprites.AddRange(list);
+                       }
             }
+            return _sprites;
+        }
+
+        public async Task<List<Sprite>> GetSpritesAsync(){
+            return await Task.FromResult(CompileCode());
         }
 
     }

@@ -24,7 +24,7 @@ using Sprity;namespace Sty
         private Sound _mainBackgroundSong;
         private SpriteFont font;
         SimpleFps fps = new SimpleFps();
-
+        private Monitor _monitor;
         private ScriptLoader _scriptLoader;
         
         public Game1()
@@ -39,11 +39,16 @@ using Sprity;namespace Sty
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            
             _graphics.PreferredBackBufferWidth = 1920;
             _graphics.PreferredBackBufferHeight = 1080;
-            _graphics.ApplyChanges();
+            //_graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+            //_graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+            //_graphics.IsFullScreen = true;
             _graphics.SynchronizeWithVerticalRetrace = false;
             this.IsFixedTimeStep = false;
+            _graphics.ApplyChanges();
+            
             base.Initialize();
         }
 
@@ -53,19 +58,20 @@ using Sprity;namespace Sty
             sbObjects = new List<Sprite>();
             _spriteBatch = new SpriteBatch(GraphicsDevice);
            
-            var song = "/Applications/osu!w.app/Contents/Resources/drive_c/osu!/Songs/547714 RADWIMPS - Hikari/audio.mp3";
+            var song = "/Users/josepuma/Downloads/The Only One I Need - Maxi Malone.mp3";
             _mainBackgroundSong = new Sound(song);
-            _texturesContent = TextureContent.LoadListContent<Texture2D>(GraphicsDevice, "/Applications/osu!w.app/Contents/Resources/drive_c/osu!/Songs/547714 RADWIMPS - Hikari/sb");
+            _texturesContent = TextureContent.LoadListContent<Texture2D>(GraphicsDevice, "/Users/josepuma/Documents/personal/sb");
             SpriteUtility.Instance.SetSpriteBatch(_spriteBatch);
             SpriteUtility.Instance.SetContentTextures(_texturesContent);
             SpriteUtility.Instance.SetGraphicsContext(_graphics);
             SpriteUtility.Instance.SetGraphicsDevice(GraphicsDevice);
             
             
-            _scriptLoader = new ScriptLoader("scripts", sbObjects);
-            _scriptLoader.CompileCode();
-
-            
+            _scriptLoader = new ScriptLoader("scripts");
+            _monitor = new Monitor("scripts", sbObjects, _scriptLoader);
+            _monitor.OnFileChanged += Monitor_ReloadSprites;
+            sbObjects = _scriptLoader.GetSpritesAsync().Result;
+            Console.WriteLine("sprites loaded: " + sbObjects.Count);
 
             font = Content.Load<SpriteFont>("assets/Fonts/Arial");
             _grid = new Grid(font, GraphicsDevice, 854, 480, _graphics , 10);
@@ -75,6 +81,18 @@ using Sprity;namespace Sty
 
             _mainBackgroundSong.Play();
 
+        }
+
+        private void Monitor_ReloadSprites(object sender, EventArgs e){
+            ReloadSprites();
+        }
+
+        private void ReloadSprites(){
+            sbObjects.Clear();
+            _scriptLoader.LoadScripts();
+            var sprites = _scriptLoader.GetSpritesAsync().Result;
+            sbObjects = sprites.ToList();  
+            sbObjects = sbObjects.ToList();
         }
 
         protected override void Update(GameTime gameTime)
@@ -88,12 +106,16 @@ using Sprity;namespace Sty
                 if(Keyboard.GetState().IsKeyDown(Keys.Left))
                     _mainBackgroundSong.ChangePosition(_soundPosition - 1000);
 
-
-                foreach (Sprite spriteObject in sbObjects)
-                {
-                    spriteObject.Update(_soundPosition, gameTime);
+                if(sbObjects.Count > 0){
+                    foreach (Sprite spriteObject in sbObjects)
+                    {
+                        spriteObject.Update(_soundPosition, gameTime);
+                    }
                 }
             }
+            if(Keyboard.GetState().IsKeyDown(Keys.Space))
+                _mainBackgroundSong.Pause();
+            
             
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
@@ -107,11 +129,13 @@ using Sprity;namespace Sty
         {
             GraphicsDevice.Clear(Color.Black);
 
-            // TODO: Add your drawing code here
-            foreach (Sprite spriteObject in sbObjects)
-            {
-                spriteObject.Draw();
+            if(sbObjects.Count > 0){
+                foreach (Sprite spriteObject in sbObjects)
+                {
+                    spriteObject.Draw();
+                }
             }
+            
             
             if(Keyboard.GetState().IsKeyDown(Keys.G)){
                 _grid.Draw();

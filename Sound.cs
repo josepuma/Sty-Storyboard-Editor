@@ -5,6 +5,7 @@ using ManagedBass;
 namespace Sty{
     public class Sound {
         bool _isPlaying;
+        bool _isPaused;
         bool _isStreamLoaded;
         int _stream;
         public bool IsPlaying {get { return _isPlaying; }}
@@ -22,8 +23,24 @@ namespace Sty{
 
         public void Play(){
             if(_isStreamLoaded){
-                Bass.ChannelPlay(_stream);
+                Bass.ChannelPlay(_stream, false);
                 _isPlaying = true;
+            }
+        }
+
+        public void Pause(){
+            if(_isStreamLoaded){
+                if(_isPaused){
+                    
+                    Bass.ChannelPlay(_stream, false);
+                    _isPlaying = true;
+                    _isPaused = false;
+                }else{
+                    Bass.ChannelPause(_stream);
+                    _isPlaying = false;
+                    _isPaused = true;
+                }
+                
             }
         }
 

@@ -13,18 +13,21 @@ namespace Sty {
      private Timer processTimer;
      private string watchedPath;
      private FileSystemWatcher watcher;
-
+   
      private List<Sprite> sprites;
-     private ScriptLoader _scriptloader;
 
-    public Monitor(string watchedPath, ScriptLoader scriptloader)
+     private ScriptLoader _scriptLoader;
+
+    DateTime lastRead = DateTime.MinValue;
+
+    public Monitor(string watchedPath, List<Sprite> sbObjects, ScriptLoader scriptLoader)
     {
         filePaths = new List<string>();
-        this.sprites = new List<Sprite>();
+        this.sprites = sbObjects;
         rwlock = new System.Threading.ReaderWriterLockSlim();
         filePaths = GetFiles(watchedPath);
+        _scriptLoader = scriptLoader;
         this.watchedPath = watchedPath;
-        this._scriptloader = scriptloader;
         InitFileSystemWatcher();
     }
 
@@ -46,9 +49,17 @@ namespace Sty {
         // Watcher crashed. Re-init.
         InitFileSystemWatcher();
     }
-
+    public event EventHandler OnFileChanged;
+   protected virtual void OnFileChange(EventArgs e){
+      OnFileChanged.Invoke(this, e);
+   }
     private void Watcher_FileChanged(object sender, FileSystemEventArgs e){
-         Console.WriteLine("File changed: " + e.FullPath);  
+      DateTime lastWriteTime = File.GetLastWriteTime(e.FullPath);
+      if (lastWriteTime != lastRead)
+      {
+         OnFileChange(e);
+         lastRead = lastWriteTime;
+      }
         //CompileCode();
     }
     private List<string> GetFiles(string directory){
@@ -56,7 +67,7 @@ namespace Sty {
         return myFiles;
     }
     private void CompileCode(){
-        _scriptloader.CompileCode();
+        
     }
 
      private void Watcher_FileCreated(object sender, FileSystemEventArgs e)

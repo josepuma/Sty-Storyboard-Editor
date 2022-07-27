@@ -46,15 +46,23 @@ namespace Sty{
             SpriteUtility.Instance.SpriteBatch.Begin();
             for (float x = -cols; x < cols; x++)
             {
+                var alpha = 0.1f;
+                if(x == 0){
+                    alpha = 0.6f;
+                }
                 Rectangle rectangle = new Rectangle((int)((centerX + 5) + x * gridSize), 0, 1, (height));
-                SpriteUtility.Instance.SpriteBatch.Draw(texture, rectangle, Color.White * 0.1f);
+                SpriteUtility.Instance.SpriteBatch.Draw(texture, rectangle, Color.White * alpha);
             }
             for (float y = -rows; y < rows; y++)
             {
+                var alpha = 0.1f;
+                if(y == 0){
+                    alpha = .6f;
+                }
                 Rectangle rectangle = new Rectangle(0, (int)(centerY + y * gridSize), (width), 1);
-                SpriteUtility.Instance.SpriteBatch.Draw(texture, rectangle, null, Color.White * 0.1f);
+                SpriteUtility.Instance.SpriteBatch.Draw(texture, rectangle, null, Color.White * alpha);
             }
-            SpriteUtility.Instance.SpriteBatch.DrawString(font, "(X: " + Math.Round(mousePosition.X * scale, 2) + ",Y: " + Math.Round(mousePosition.Y * scale, 2) + ")", new Vector2(0,0), Color.White, 0f, new Vector2(0,0), new Vector2(0.5f),SpriteEffects.None, 0);
+            SpriteUtility.Instance.SpriteBatch.DrawString(font, "(X: " + Math.Round((mousePosition.X * scale) - 107, 2) + ",Y: " + Math.Round(mousePosition.Y * scale, 2) + ")", new Vector2(0,0), Color.White, 0f, new Vector2(0,0), new Vector2(0.5f),SpriteEffects.None, 0);
             SpriteUtility.Instance.SpriteBatch.End();
         }
     }

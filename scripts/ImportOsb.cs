@@ -8,7 +8,7 @@ using Sprity;
 
     public class ImportOsb
     {
-        public string OsbPath = "/Applications/osu!w.app/Contents/Resources/drive_c/osu!/Songs/547714 RADWIMPS - Hikari/RADWIMPS - Hikari (Haruto).osb";
+        public string OsbPath = "/Applications/osu!w.app/Contents/Resources/drive_c/osu!/Songs/35701 Lia - Toki wo Kizamu Uta/storyboard.osb";
 
         private Dictionary<string, string> variables = new Dictionary<string, string>();
         private List<Sprite> sprites = new List<Sprite>();
@@ -19,21 +19,12 @@ using Sprity;
             return sprites;
         }
 
-        /*private void parseVariablesSection(StreamReader reader)
-        {
-            reader.ParseSectionLines(line =>
-            {
-                var values = line.Split('=');
-                if (values.Length == 2)
-                    variables.Add(values[0], values[1]);
-            });
-        }*/
-
         public void parseEventsSection(string[] lines)
         {
             Sprite osbSprite = null;
             var inCommandGroup = false;
             foreach(var line in lines){
+                //Console.WriteLine(line);
                 if (line.StartsWith("//")) continue;
                 if (line.StartsWith("[")) continue;
 
@@ -62,11 +53,11 @@ using Sprity;
                             var x = float.Parse(values[4], CultureInfo.InvariantCulture);
                             var y = float.Parse(values[5], CultureInfo.InvariantCulture);
                             if(osbSprite != null){
-                                sprites.Add(osbSprite);
+                                //sprites.Add(osbSprite);
                                 osbSprite = null;
                             }
                             
-                            osbSprite = new Sprite(cleanPath){ Position = new Point((int)x + 127,(int)y) };
+                            osbSprite = new Sprite(cleanPath){ Position = new Point((int)x + 107,(int)y) };
                             //osbSprite = GetLayer(layerName).CreateSprite(path, origin, new Vector2(x, y));
                         }
                         break;
@@ -99,7 +90,7 @@ using Sprity;
                             var endTime = double.Parse(values[3], CultureInfo.InvariantCulture);
                             var groupNumber = values.Length > 4 ? int.Parse(values[4]) : 0;
                             //osbSprite.StartTriggerGroup(triggerName, startTime, endTime, groupNumber);
-                            inCommandGroup = true;
+                            //inCommandGroup = true;
                         }
                         break;
                     case "L":
@@ -107,7 +98,7 @@ using Sprity;
                             var startTime = double.Parse(values[1], CultureInfo.InvariantCulture);
                             var loopCount = int.Parse(values[2]);
                             //osbSprite.StartLoopGroup(startTime, loopCount);
-                            inCommandGroup = true;
+                            //inCommandGroup = true;
                         }
                         break;
                     default:
@@ -183,6 +174,7 @@ using Sprity;
                                         var endX = values.Length > 7 ? double.Parse(values[7], CultureInfo.InvariantCulture) : startX;
                                         var endY = values.Length > 8 ? double.Parse(values[8], CultureInfo.InvariantCulture) : startY;
                                         var endZ = values.Length > 9 ? double.Parse(values[9], CultureInfo.InvariantCulture) : startZ;
+                                        osbSprite.Tint(startX, startY, startZ);
                                         //osbSprite.Color(easing, startTime, endTime, startX / 255f, startY / 255f, startZ / 255f, endX / 255f, endY / 255f, endZ / 255f);
                                     }
                                     break;

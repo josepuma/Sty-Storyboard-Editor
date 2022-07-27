@@ -7,6 +7,8 @@ public class Storyboard {
     public List<Sprite> Generate(){
             var sprites = new List<Sprite>();
             
+
+
             //Background
             Random rnd = new Random();
 
@@ -25,12 +27,12 @@ public class Storyboard {
                 sp.Rotate(start, start + beat,r,0);
                 sp.Move(start, start + beat,x, 580, x,0);
                 sp.Fade(start, start + beat,f,0);
-                //sprites.Add(sp);
+                sprites.Add(sp);
                 start+= 100;
             }
 
             // Spectrum
-            var song = "/Applications/osu!w.app/Contents/Resources/drive_c/osu!/Songs/574067 Tia - The Glory Days/audio.mp3";
+            var song = "/Users/josepuma/Downloads/The Only One I Need - Maxi Malone.mp3";
             var streamfft = new FftSound(song);
             var st = 0;
             var ed = streamfft.Duration * 1000;
@@ -73,9 +75,14 @@ public class Storyboard {
                         }
                     }
 
-                    //sprites.Add(bar);
+                    sprites.Add(bar);
                     pos++;
                 }
+
+            var gradient = new Sprite("gradient.png"){ IsAdditiveBlend = true, Opacity = 0.6 };
+            gradient.ScaleVec(0, 100000, 854, 1, 854, 1);
+            gradient.MoveY(0, 10000, 360, 360);
+            sprites.Add(gradient);
 
             return sprites;
         }
