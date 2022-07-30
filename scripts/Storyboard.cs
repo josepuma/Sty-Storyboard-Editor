@@ -27,62 +27,16 @@ public class Storyboard {
                 sp.Rotate(start, start + beat,r,0);
                 sp.Move(start, start + beat,x, 580, x,0);
                 sp.Fade(start, start + beat,f,0);
-                sprites.Add(sp);
+                //sprites.Add(sp);
                 start+= 100;
             }
 
-            // Spectrum
-            var song = "/Users/josepuma/Downloads/The Only One I Need - Maxi Malone.mp3";
-            var streamfft = new FftSound(song);
-            var st = 0;
-            var ed = streamfft.Duration * 1000;
-            var barCount = 55;
-            var offset = 50;
-            var scale = 10;
             
-            var keys = new Spectrum<BarFFt>(barCount);
-            List<BarFFt> values = new List<BarFFt>();
-            for(var i = 0; i < barCount; i++){
-                keys.Set(new BarFFt(), i);
-            }
-
-            for(var time = st; time < ed ; time += offset){
-                    var fft = streamfft.GetFft(time);
-                    for(var i = 0; i < barCount; i++){
-                        keys.GetAt(i).AddFft(
-                            new Fft(){
-                                StartTime = (int)time,
-                                StartValue = .1 + (float)Math.Log10(1 + fft[i] * scale) * 10
-                            }
-                        );                 
-                    }
-            }
-
-            var pos = 1; 
-                for(var j = 0; j< barCount; j++){
-                    var fft = keys.GetAt(j);
-                    var bar = new Sprite("bar.png"){ IsAdditiveBlend = true };
-                    bar.Move(0,1000000, 10 * pos, 400, 10*pos, 400);
-                    bar.Fade(0,1000000,1,1);
-                    var times = fft.GetTimes();
-                    for(var i = 0; i < times.Count; i++){
-                        if(i + 1 < times.Count){
-                            var startTime = times[i].StartTime;
-                            var startValue = times[i].StartValue;
-                            var endTime = times[i + 1].StartTime;
-                            var endValue = times[i + 1].StartValue;
-                            bar.ScaleVec(startTime, endTime, .8, startValue, .8, endValue);
-                        }
-                    }
-
-                    sprites.Add(bar);
-                    pos++;
-                }
 
             var gradient = new Sprite("gradient.png"){ IsAdditiveBlend = true, Opacity = 0.6 };
             gradient.ScaleVec(0, 100000, 854, 1, 854, 1);
             gradient.MoveY(0, 10000, 360, 360);
-            sprites.Add(gradient);
+            //sprites.Add(gradient);
 
             return sprites;
         }

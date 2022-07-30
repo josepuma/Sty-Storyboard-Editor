@@ -8,7 +8,7 @@ using Sprity;
 
     public class ImportOsb
     {
-        public string OsbPath = "/Applications/osu!w.app/Contents/Resources/drive_c/osu!/Songs/35701 Lia - Toki wo Kizamu Uta/storyboard.osb";
+        public string OsbPath = "/Users/josepuma/Documents/storyboards/432822 NOMA - Brain Power Long Version/NOMA - Brain Power Long Version (Skystar).osb";
 
         private Dictionary<string, string> variables = new Dictionary<string, string>();
         private List<Sprite> sprites = new List<Sprite>();
@@ -48,16 +48,16 @@ using Sprity;
                         {
                             var layerName = values[1];
                             //var origin = (OsbOrigin)Enum.Parse(typeof(OsbOrigin), values[2]);
-                            var path = removePathQuotes(values[3]);
-                            var cleanPath = Path.GetFileName(path.Replace("\\", "/"));
+                            var path = removePathQuotes(values[3]).ToLower();
+                            var cleanPath = path.Replace("\\", "/");
                             var x = float.Parse(values[4], CultureInfo.InvariantCulture);
                             var y = float.Parse(values[5], CultureInfo.InvariantCulture);
                             if(osbSprite != null){
-                                //sprites.Add(osbSprite);
+                                sprites.Add(osbSprite);
                                 osbSprite = null;
-                            }
-                            
-                            osbSprite = new Sprite(cleanPath){ Position = new Point((int)x + 107,(int)y) };
+                            } 
+                            //Console.WriteLine("sprite:" + cleanPath);
+                            osbSprite = new Sprite(cleanPath){ Position = new Point((int)x,(int)y) };
                             //osbSprite = GetLayer(layerName).CreateSprite(path, origin, new Vector2(x, y));
                         }
                         break;

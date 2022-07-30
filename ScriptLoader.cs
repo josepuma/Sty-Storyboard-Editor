@@ -31,11 +31,14 @@ namespace Sty {
             {
                 var code = File.ReadAllText(current);
                 var key = Path.GetFileNameWithoutExtension(current);
-                if(_scripts.ContainsKey(key)){
-                    _scripts[key] = code;
-                }else{
-                    _scripts.Add(key, code);
+                if(!String.IsNullOrEmpty(code) && code.Contains("Generate")){
+                    if(_scripts.ContainsKey(key)){
+                        _scripts[key] = code;
+                    }else{
+                        _scripts.Add(key, code);
+                    }
                 }
+                
             });
         }
 
@@ -55,11 +58,14 @@ namespace Sty {
             _sprites.Clear();
 
             foreach(var script in _scripts){
-                var list = CSharpScript.RunAsync(script.Value, scriptOptions).Result
+                if(script.Value is not null){
+                    var list = CSharpScript.RunAsync(script.Value, scriptOptions).Result
                        .ContinueWithAsync<List<Sprite>>("new " + script.Key + "().Generate()").Result.ReturnValue;
                        if(list.Count > 0){
                             _sprites.AddRange(list);
                        }
+                }
+                
             }
             return _sprites;
         }

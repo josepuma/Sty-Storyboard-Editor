@@ -26,6 +26,8 @@ using Sprity;namespace Sty
         SimpleFps fps = new SimpleFps();
         private Monitor _monitor;
         private ScriptLoader _scriptLoader;
+        private bool _areSpritesReloading;
+        private Project _project;
         
         public Game1()
         {
@@ -54,24 +56,26 @@ using Sprity;namespace Sty
 
         protected override void LoadContent()
         {
-          
-            sbObjects = new List<Sprite>();
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-           
-            var song = "/Users/josepuma/Downloads/The Only One I Need - Maxi Malone.mp3";
-            _mainBackgroundSong = new Sound(song);
-            _texturesContent = TextureContent.LoadListContent<Texture2D>(GraphicsDevice, "/Users/josepuma/Documents/personal/sb");
             SpriteUtility.Instance.SetSpriteBatch(_spriteBatch);
-            SpriteUtility.Instance.SetContentTextures(_texturesContent);
             SpriteUtility.Instance.SetGraphicsContext(_graphics);
             SpriteUtility.Instance.SetGraphicsDevice(GraphicsDevice);
             
+
+            _project = new Project("/Users/josepuma/Documents/storyboards/432822 NOMA - Brain Power Long Version");
+            SpriteUtility.Instance.SetContentTextures(_project.Textures);
+            sbObjects = new List<Sprite>();
             
+           
+            //var song = "/Users/josepuma/Downloads/The Only One I Need - Maxi Malone.mp3";
+            _mainBackgroundSong = new Sound(_project.AudioSourcePath);
+            Console.WriteLine(_project.AudioSourcePath);
+
             _scriptLoader = new ScriptLoader("scripts");
             _monitor = new Monitor("scripts", sbObjects, _scriptLoader);
             _monitor.OnFileChanged += Monitor_ReloadSprites;
             sbObjects = _scriptLoader.GetSpritesAsync().Result;
-            Console.WriteLine("sprites loaded: " + sbObjects.Count);
+            
 
             font = Content.Load<SpriteFont>("assets/Fonts/Arial");
             _grid = new Grid(font, GraphicsDevice, 854, 480, _graphics , 10);
@@ -88,11 +92,13 @@ using Sprity;namespace Sty
         }
 
         private void ReloadSprites(){
+            _areSpritesReloading = true;
             sbObjects.Clear();
             _scriptLoader.LoadScripts();
             var sprites = _scriptLoader.GetSpritesAsync().Result;
             sbObjects = sprites.ToList();  
             sbObjects = sbObjects.ToList();
+            _areSpritesReloading = false;
         }
 
         protected override void Update(GameTime gameTime)
@@ -107,8 +113,8 @@ using Sprity;namespace Sty
                     _mainBackgroundSong.ChangePosition(_soundPosition - 1000);
 
                 if(sbObjects.Count > 0){
-                    foreach (Sprite spriteObject in sbObjects)
-                    {
+                    for(var i = 0; i < sbObjects.Count; i++){
+                        var spriteObject = sbObjects[i];
                         spriteObject.Update(_soundPosition, gameTime);
                     }
                 }
@@ -130,8 +136,8 @@ using Sprity;namespace Sty
             GraphicsDevice.Clear(Color.Black);
 
             if(sbObjects.Count > 0){
-                foreach (Sprite spriteObject in sbObjects)
-                {
+                 for(var i = 0; i < sbObjects.Count; i++){
+                    var spriteObject = sbObjects[i];
                     spriteObject.Draw();
                 }
             }
