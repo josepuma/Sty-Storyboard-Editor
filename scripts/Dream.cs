@@ -9,7 +9,7 @@ public class Dream {
             var sprites = new List<Sprite>();
             Random rnd = new Random();
             sprites.Add(Background());
-            sprites.AddRange(Sparkles());
+            sprites.AddRange(Sparkles()); 
 
             var r = 360; //radius
             var startx = 320;
