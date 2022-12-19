@@ -10,7 +10,7 @@ public class Background {
             bg.Fade(0,10000000,1,0); 
             //sprites.Add(bg);   
 
-            var bg2 = new Sprite("BG.jpg"){ Size = 0.425 };
+            var bg2 = new Sprite("bg.jpg"){ Size = (854 / 1920.0) };
             bg2.Fade(0,10000000,1,0); 
             //sprites.Add(bg2);      
 

@@ -8,7 +8,7 @@ using Sprity;
 
     public class ImportOsb
     {
-        public string OsbPath = "/Users/josepuma/Documents/storyboards/432822 NOMA - Brain Power Long Version/NOMA - Brain Power Long Version (Skystar).osb";
+        public string OsbPath = "/Users/josepuma/Documents/storyboards/358685 keeno - alternate/keeno - alternate (mintong89).osb";
 
         private Dictionary<string, string> variables = new Dictionary<string, string>();
         private List<Sprite> sprites = new List<Sprite>();

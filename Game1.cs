@@ -42,8 +42,8 @@ using Sprity;namespace Sty
         {
             // TODO: Add your initialization logic here
             
-            _graphics.PreferredBackBufferWidth = 1920;
-            _graphics.PreferredBackBufferHeight = 1080;
+            _graphics.PreferredBackBufferWidth = 1366;
+            _graphics.PreferredBackBufferHeight = 768;
             //_graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
             //_graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
             //_graphics.IsFullScreen = true;
@@ -62,7 +62,7 @@ using Sprity;namespace Sty
             SpriteUtility.Instance.SetGraphicsDevice(GraphicsDevice);
             
 
-            _project = new Project("/Users/josepuma/Documents/storyboards/432822 NOMA - Brain Power Long Version");
+            _project = new Project("/Applications/osu!w.app/Contents/Resources/drive_c/osu!/Songs/1777388 Akira - I Dream (Radio Mix) (Nightcore Mix)");
             SpriteUtility.Instance.SetContentTextures(_project.Textures);
             sbObjects = new List<Sprite>();
             
