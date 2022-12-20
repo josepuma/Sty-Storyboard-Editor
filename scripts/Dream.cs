@@ -62,7 +62,7 @@ public class Dream {
                         spark.MoveY(ScaleFuncs.SineIn,start, start + duration * 2, starty, y);
                         spark.Scale(start, start + duration * 2, s, 0);
                         spark.Tint(230, 172, 80);
-                        //sparkles.Add(spark);
+                        sparkles.Add(spark);
                     }
                     
                 }
@@ -87,7 +87,7 @@ public class Dream {
                         spark.Scale(start, start + duration * 2, s, 0);
                         spark.Rotate(start, start + duration * 2, radians, radians * 2);
                         spark.Tint(230, 172, 80);
-                        //sparkles.Add(spark);
+                        sparkles.Add(spark);
                     }   
 
                     

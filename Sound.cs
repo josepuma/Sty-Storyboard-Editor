@@ -53,6 +53,15 @@ namespace Sty{
             return 0;
         }
 
+        public double GetLength(){
+            if(_isStreamLoaded && _isPlaying){
+                var bytesPosition = Bass.ChannelGetLength(_stream);
+                var time = Bass.ChannelBytes2Seconds(_stream, bytesPosition);
+                return time * 1000;
+            }
+            return 0;
+        }
+
         public void ChangePosition(double position){
             var newPosition = Bass.ChannelSeconds2Bytes(_stream, position / 1000);
             Bass.ChannelSetPosition(_stream, newPosition);

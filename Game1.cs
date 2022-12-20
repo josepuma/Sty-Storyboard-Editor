@@ -12,7 +12,9 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using SimpleFpsCounter;
-using Sprity;namespace Sty
+using Sprity;
+
+namespace Sty
 {
     public class Game1 : Game
     {
@@ -28,6 +30,7 @@ using Sprity;namespace Sty
         private ScriptLoader _scriptLoader;
         private bool _areSpritesReloading;
         private Project _project;
+        private Slider _slider; 
         
         public Game1()
         {
@@ -61,13 +64,16 @@ using Sprity;namespace Sty
             SpriteUtility.Instance.SetGraphicsContext(_graphics);
             SpriteUtility.Instance.SetGraphicsDevice(GraphicsDevice);
             
+            
 
-            _project = new Project("/Applications/osu!w.app/Contents/Resources/drive_c/osu!/Songs/1777388 Akira - I Dream (Radio Mix) (Nightcore Mix)");
+            _project = new Project("/Applications/osu!w.app/Contents/Resources/drive_c/osu!/Songs/151720 ginkiha - EOS");
             SpriteUtility.Instance.SetContentTextures(_project.Textures);
+            
+
             sbObjects = new List<Sprite>();
             
            
-            //var song = "/Users/josepuma/Downloads/The Only One I Need - Maxi Malone.mp3";
+            
             _mainBackgroundSong = new Sound(_project.AudioSourcePath);
             Console.WriteLine(_project.AudioSourcePath);
 
@@ -79,13 +85,19 @@ using Sprity;namespace Sty
 
             font = Content.Load<SpriteFont>("assets/Fonts/Arial");
             _grid = new Grid(font, GraphicsDevice, 854, 480, _graphics , 10);
-            
+            _slider = new Slider(font);
+            _slider.Changed += UpdateSongPosition;
             
            
 
             _mainBackgroundSong.Play();
 
         }
+
+        private void UpdateSongPosition(double pos){
+            _mainBackgroundSong.ChangePosition(pos);
+        }
+
 
         private void Monitor_ReloadSprites(object sender, EventArgs e){
             ReloadSprites();
@@ -106,6 +118,7 @@ using Sprity;namespace Sty
             var delta = (float)gameTime.ElapsedGameTime.TotalMilliseconds;
             if(_mainBackgroundSong.IsPlaying){
                 var _soundPosition = _mainBackgroundSong.GetPosition();
+                var _length = _mainBackgroundSong.GetLength();
                 if(Keyboard.GetState().IsKeyDown(Keys.Right))
                     _mainBackgroundSong.ChangePosition(_soundPosition + 1000);
 
@@ -118,6 +131,8 @@ using Sprity;namespace Sty
                         spriteObject.Update(_soundPosition, gameTime);
                     }
                 }
+                _slider.Update(_soundPosition, _length);
+                
             }
             if(Keyboard.GetState().IsKeyDown(Keys.Space))
                 _mainBackgroundSong.Pause();
@@ -147,6 +162,8 @@ using Sprity;namespace Sty
                 _grid.Draw();
                 fps.DrawFps(_spriteBatch, font, new Vector2(10f, 10f), Color.MonoGameOrange);
             }
+
+            _slider.Draw();
 
             base.Draw(gameTime);
         }

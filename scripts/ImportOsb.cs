@@ -8,7 +8,7 @@ using Sprity;
 
     public class ImportOsb
     {
-        public string OsbPath = "/Users/josepuma/Documents/storyboards/358685 keeno - alternate/keeno - alternate (mintong89).osb";
+        public string OsbPath = "/Applications/osu!w.app/Contents/Resources/drive_c/osu!/Songs/151720 ginkiha - EOS/ginkiha - EOS (alacat).osb";
 
         private Dictionary<string, string> variables = new Dictionary<string, string>();
         private List<Sprite> sprites = new List<Sprite>();

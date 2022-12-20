@@ -62,7 +62,15 @@ namespace Sty{
                 Rectangle rectangle = new Rectangle(0, (int)(centerY + y * gridSize), (width), 1);
                 SpriteUtility.Instance.SpriteBatch.Draw(texture, rectangle, null, Color.White * alpha);
             }
-            SpriteUtility.Instance.SpriteBatch.DrawString(font, "(X: " + Math.Round((mousePosition.X * scale) - 107, 2) + ",Y: " + Math.Round(mousePosition.Y * scale, 2) + ")", new Vector2(0,0), Color.White, 0f, new Vector2(0,0), new Vector2(0.5f),SpriteEffects.None, 0);
+            SpriteUtility.Instance.SpriteBatch.DrawString(font, 
+            "(X: " + Math.Round((mousePosition.X * scale) - 107, 2) + ",Y: " + Math.Round(mousePosition.Y * scale, 2) + ")", 
+            new Vector2(0,0), 
+            Color.White,
+            0f, 
+            new Vector2(0,0), 
+            new Vector2(0.5f),
+            SpriteEffects.None, 
+            0);
             SpriteUtility.Instance.SpriteBatch.End();
         }
     }
